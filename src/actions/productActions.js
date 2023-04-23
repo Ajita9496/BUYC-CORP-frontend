@@ -9,13 +9,13 @@ import {
   PRODUCT_UPDATE_SUCCESS,
 } from "../constants/productConstants";
 import axios from "axios";
-
+const url = "https://buyc-corp.onrender.com";
 export const listProducts =
   (keyword = "", pageNumber = "") =>
   async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+        `${url}/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
       );
 
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
@@ -24,7 +24,7 @@ export const listProducts =
 
 export const listProductsDetails = (id) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/products/${id}`);
+    const { data } = await axios.get(`${url}/api/products/${id}`);
 
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
@@ -48,7 +48,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`/api/products/${id}`, config);
+    await axios.delete(`${url}/api/products/${id}`, config);
 
     dispatch({
       type: PRODUCT_DELETE_SUCCESS,
@@ -73,7 +73,7 @@ export const createProduct = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(`/api/products`, {}, config);
+    const { data } = await axios.post(`${url}/api/products`, {}, config);
 
     dispatch({
       type: PRODUCT_CREATE_SUCCESS,
@@ -102,7 +102,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `/api/products/${product._id}`,
+      `${url}/api/products/${product._id}`,
       product,
       config
     );

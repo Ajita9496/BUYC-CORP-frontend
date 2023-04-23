@@ -7,7 +7,7 @@ import FormContainer from "../components/FormContainer";
 import { listProductsDetails, updateProduct } from "../actions/productActions";
 import { PRODUCT_UPDATE_RESET } from "../constants/productConstants";
 import { Typography } from "@mui/material";
-
+const url = "https://buyc-corp.onrender.com";
 const ProductEditScreen = () => {
   const params = useParams();
   const navigation = useNavigate();
@@ -79,21 +79,10 @@ const ProductEditScreen = () => {
 
   const uploadMultiImageFileHandler = async (e) => {
     const file = e.target.files;
-    // console.log(file);
-    // setImages(file);
     var formdata = new FormData();
     for (const key of Object.keys(e.target.files)) {
       formdata.append("uploadedImages", e.target.files[key]);
     }
-    // for (var i = 0; i < e.target.files.length; i++) {
-    //   formdata.append("uploadedImages", e.target.files[i]);
-    //   console.log("ddddd", e.target.files[i], `${e.target.files[i].name}`);
-    // }
-    // formdata.append("uploadedImages", e.target.files[0]);
-    // formdata.append("uploadedImages", e.target.files[1]);
-    //   for (const key of Object.keys(e.target.files)) {
-    //     // formdata.append("uploadImages", e.target.files[key])
-    // }
 
     setUploading(true);
     try {
@@ -104,19 +93,13 @@ const ProductEditScreen = () => {
       };
 
       const { data } = await axios.post(
-        "/api/upload/upload-images",
+        `${url}/api/upload/upload-images`,
         formdata,
         config
       );
       for (var i = 0; i < data.length; i++) {
         console.log(data[i].img);
-
-        // this.setState({
-        //   arrayvar: this.state.array.concat([newelement])
-        // })
         fileArray.push(data[i].img);
-        // formdata.append("uploadedImages", e.target.files[i]);
-        // console.log("ddddd", e.target.files[i], `${e.target.files[i].name}`);
       }
 
       setImages(fileArray);
@@ -128,74 +111,7 @@ const ProductEditScreen = () => {
     }
   };
 
-  // var requestOptions = {
-  //   method: "POST",
-  //   body: formdata,
-  //   redirect: "follow",
-  // };
-
-  // fetch("/api/upload/upload-images", requestOptions)
-  // .then((response) => response.text())
-  // .then((res) => {
-  //   console.log(res);
-  // setImages(result[0]);
-  // console.log(result.yo[0]);
-  // console.log("eee", result[0]);
-  // for (const key of Object.keys(result)) {
-  //   console.log("uploadedImages",result[key]);
-  // }
-  // for (var i = 0; i < result.length; i++) {
-  //   // formdata.append("uploadedImages", e.target.files[i]);
-  //   console.log("ddddd", result.length);
-  // }
-  // for (var i = 0; i < result.yo; i++) {
-  //   fileObj.push(result.yo[i]);
-  // }
-  // console.log("res",fileObj.push(result.yo));
-  // console.log(fileObj);
-  // })
-  // .catch((error) => console.log("error", error));
-  // console.log(e.target.files);
-  // const formData = new FormData();
-  // for (var i = 0; i < e.target.files.length; i++) {
-  //   formData.append("uploadImages", e.target.files[i]);
-  //   console.log("ddddd", e.target.files[i]);
-  // }
-  // console.log("ddddd", formData, images);
-
-  // try {
-  //   console.log("ddddd", formData, images);
-  //   const config = {
-  //     headers: {
-  //       "Content-Type": "multipart/form-data",
-  //     },
-  //   };
-  //   const { data } = await axios.post("/api/upload/upload-images", formData);
-  //   console.log("res", data);
-  //   setImages(data);
-  // } catch (error) {
-  //   console.error(error);
-  // }
-  // };
-
   const uploadFileHandler = async (e) => {
-    // const formData = new FormData();
-    // for (var i = 0; i <e.target.pictures.length; i++) {
-    //     formData.append('uploadImages', e.target.pictures[i])
-    // }
-    // // formData.append('texts', JSON.stringify(this.state.formTexts))
-    // const config = {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //       },
-    //     };
-
-    // await axios.post("/api/upload", formData, config)
-    //     .then((res)=> {
-    //       console.log("succcc",res)
-    //     }).catch((err)=>
-    //     console.log("error",err)
-    //     )
     const file = e.target.files[0];
     console.log(file);
     const formData = new FormData();
@@ -210,7 +126,7 @@ const ProductEditScreen = () => {
         },
       };
 
-      const { data } = await axios.post("/api/upload", formData, config);
+      const { data } = await axios.post(`${url}/api/upload`, formData, config);
       console.log(data);
       setImage(data);
       setUploading(false);
